@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { themeSettings } from "theme";
 import Layout from 'scenes/layout';
 import Dashboard from 'scenes/dashboard';
-
+import Expenses from 'scenes/expenses';
 
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
           <Routes>
             <Route element={<Layout/>}>
               <Route path='/' element={<Dashboard/>}/>
+              <Route path='/expenses' element={<Expenses/>}/>
             </Route>
           </Routes>
         </ThemeProvider>
