@@ -33,10 +33,10 @@ export const postApi = createApi({
               [{ type: 'Posts', id: 'LIST' }],
       }),
       addUser: build.mutation({
-        query: (body) => ({
+        query: ({email, password, username}) => ({
           url: 'api/users',
           method: 'POST',
-          body,
+          body: { email, password, username },
         }),
         invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
       }),

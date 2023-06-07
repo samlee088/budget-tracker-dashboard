@@ -1,18 +1,13 @@
 import express from 'express';
-import path from 'path';
 import apiRoutes from './api/index.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const router = express.Router();
 
 router.use('/api', apiRoutes);
 
+// Catch-all route for non-API routes
 router.use((req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/public/index.html'));
+  res.status(404).json({ message: 'Route not found' });
 });
 
 export default router;

@@ -18,12 +18,11 @@ const Login = () => {
       console.log(userNameRef.current.value);
       
       const response = await addUserPost({
-        body: {
           email: emailRef.current.value,
           password: passRef.current.value,
-          userName: userNameRef.current.value,
-        },
-      });
+          username: userNameRef.current.value,
+      },
+      );
 
       console.log(response);
 

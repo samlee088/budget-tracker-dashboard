@@ -5,7 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import apiRoutes from './routes/index.js';
+import apiRoutes from './routes/api/index.js';
 
 
 /* Configuration */
