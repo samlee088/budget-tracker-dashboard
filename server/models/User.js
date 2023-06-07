@@ -1,8 +1,6 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
-
-// import schema from Expense.js
-const ExpenseSchema = require('./Expense');
+import { Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
+import ExpenseSchema from './Expense.js';
 
 const userSchema = new Schema(
   {
@@ -54,4 +52,4 @@ userSchema.virtual('expensesCount').get(function () {
 
 const User = model('User', userSchema);
 
-module.exports = User;
+export default User;

@@ -5,6 +5,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import apiRoutes from './routes/index.js';
+
 
 /* Configuration */
 dotenv.config();
@@ -18,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors());
 
 /* Routes */
-
+app.use('/api', apiRoutes);
 
 /* Mongoose Setup */
 const PORT = process.env.PORT || 9000;

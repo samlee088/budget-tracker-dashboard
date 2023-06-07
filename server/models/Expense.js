@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+import { Schema } from 'mongoose';
 
 const expenseSchema = new Schema({
     name: 
@@ -32,7 +32,7 @@ const expenseSchema = new Schema({
 
 })
 
-module.exports = expenseSchema;
+export default expenseSchema;
 
 
 
