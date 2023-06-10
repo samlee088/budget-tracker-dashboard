@@ -22,7 +22,7 @@ import {
     MenuItem,
     useTheme,
 } from "@mui/material";
-
+import Auth from '../utils/auth';
 
 
 const Navbar = ({
@@ -37,7 +37,7 @@ const Navbar = ({
     const isOpen = Boolean(anchorEl);
     const handleClick = (event) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null)
-
+    const logout = () => Auth.logout();
 
   return (
     <AppBar
@@ -121,7 +121,7 @@ const Navbar = ({
                             />
                     </Button>
                     <Menu anchorEl={anchorEl} open={isOpen} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center'}}>
-                        <MenuItem onClick={{handleClose}}> Log Out </MenuItem>
+                        <MenuItem onClick={logout}> Log Out </MenuItem>
                     </Menu>
                 </FlexBetween>
 
