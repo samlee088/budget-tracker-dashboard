@@ -1,16 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const api = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
-    reducerPath: "adminApi",
-    tagTypes: ["User"],
-    endpoints: (build) => ({
-    
-    })
-
-})
-
-
 export const postApi = createApi({
     reducerPath: 'postsApi',
     baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
@@ -37,6 +26,14 @@ export const postApi = createApi({
           url: 'api/users',
           method: 'POST',
           body: { email, password, username },
+        }),
+        invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+      }),
+      loginUser: build.mutation({
+        query: ({password, username}) => ({
+          url: 'api/users/login',
+          method: 'POST',
+          body: { password, username },
         }),
         invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
       }),
@@ -88,7 +85,8 @@ export const {
     useGetPostQuery,
     useUpdatePostMutation,
     useDeletePostMutation,
-    useAddUserMutation
+    useAddUserMutation,
+    useLoginUserMutation,
 } = postApi
 
 

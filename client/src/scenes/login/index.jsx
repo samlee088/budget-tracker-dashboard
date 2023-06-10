@@ -1,13 +1,20 @@
 import React, { useState, useRef } from 'react'
 import { Box, Typography } from '@mui/material';
-import { useAddUserMutation } from 'state/api';
+import { useAddUserMutation, useLoginUserMutation } from 'state/api';
+import Auth from '../../utils/auth';
 
 const Login = () => {
+
+  const loginUserNameRef = useRef(null);
+  const loginPasswordRef = useRef(null);
 
   const emailRef = useRef(null);
   const passRef = useRef(null);
   const userNameRef = useRef(null);
-  const [addUserPost, { isLoading }] = useAddUserMutation();
+  
+  const [addUserPost, { isLoading: isLoadingAddUser }] = useAddUserMutation();
+  const [loginUserPost, { isLoading: isLoadingLoginUser }] = useLoginUserMutation();
+  
 
   const register = async (e) => {
     e.preventDefault();
@@ -26,6 +33,13 @@ const Login = () => {
 
       console.log(response);
 
+      const { token, user } = response.data;
+
+      console.log( token );
+      console.log( user );
+
+      Auth.login(token);
+
       // Handle the response here
     } catch (error) {
       console.error(error);
@@ -38,12 +52,24 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await addUserPost({
-        body: {
-          email: emailRef.current.value,
-          password: passRef.current.value,
-        },
+
+      console.log(loginPasswordRef.current.value);
+      console.log(loginUserNameRef.current.value);
+
+
+      const response = await loginUserPost({
+          password: loginPasswordRef.current.value,
+          username: loginUserNameRef.current.value,
       });
+
+     console.log(response)
+
+      const {user, token } = response.data;
+
+      console.log( token );
+      console.log( user );
+
+      Auth.login(token);
 
       // Handle the response here
     } catch (error) {
@@ -72,12 +98,12 @@ const Login = () => {
       <Box sx={{m: '20px'}}>
         <form>
           <input
-            ref = { emailRef }
-            type = 'email'
-            placeholder = 'Email Address'
+            ref = { loginUserNameRef }
+            type = 'text'
+            placeholder = 'User Name'
           />
           <input 
-            ref = { passRef }
+            ref = { loginPasswordRef }
             type = 'password'
             placeholder = 'Password'
           />

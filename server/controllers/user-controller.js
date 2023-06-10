@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+import { User } from '../models/index.js';
 import { signToken } from '../utils/auth.js';
 
 export const createUser = async ({ body }, res) => {
@@ -12,6 +12,7 @@ export const createUser = async ({ body }, res) => {
 };
 
 export const login = async ({ body }, res) => {
+  
   const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
 
   if (!user) {
