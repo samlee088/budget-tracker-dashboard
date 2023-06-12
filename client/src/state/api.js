@@ -1,8 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import AuthService from '../utils/auth';
 
 export const postApi = createApi({
-    reducerPath: 'postsApi',
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
+  reducerPath: "postsApi",
+  baseQuery: fetchBaseQuery({
+      baseUrl: process.env.REACT_APP_BASE_URL,
+      prepareHeaders: (headers, { getState }) => {
+        if (AuthService.logged()) {
+          headers.set("Authorization", `Bearer ${AuthService.getToken()}`);
+        }
+        return headers;
+      },
+  }),
     tagTypes: ['Posts'],
     endpoints: (build) => ({
       getPosts: build.query({
@@ -34,6 +43,14 @@ export const postApi = createApi({
           url: 'api/users/login',
           method: 'POST',
           body: { password, username },
+        }),
+        invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+      }),
+      addExpense: build.mutation({
+        query: ({name, frequency, expectedPaymentDate, expectedPaymentAmount, user}) => ({
+          url: 'api/expenses/add',
+          method: 'POST',
+          body: { name, frequency, expectedPaymentDate, expectedPaymentAmount, user },
         }),
         invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
       }),
@@ -87,6 +104,7 @@ export const {
     useDeletePostMutation,
     useAddUserMutation,
     useLoginUserMutation,
+    useAddExpenseMutation,
 } = postApi
 
 

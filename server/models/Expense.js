@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const expenseSchema = new Schema({
     name: 
@@ -7,13 +7,12 @@ const expenseSchema = new Schema({
             required: true,
         }
     ,
-    company: { type: String},
     frequency: {
         type: String,
         required: true,
     },
     expectedPaymentDate: {
-        type: Date,
+        type: Number,
         required: true,
     },
     expectedPaymentAmount: {
@@ -22,17 +21,19 @@ const expenseSchema = new Schema({
     },
     actualPaymentDate: {
         type: Date,
-        required: true,
+        required: false,
     },
     actualPaymentAmount: {
         type: Number,
-        required: true,
+        required: false,
     }
    
 
 })
 
-export default expenseSchema;
+const Expense = model('Expense', expenseSchema);
+
+export default Expense;
 
 
 
