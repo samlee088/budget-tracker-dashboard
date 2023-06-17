@@ -12,7 +12,7 @@ const expenseSchema = new Schema({
         required: true,
     },
     expectedPaymentDate: {
-        type: Number,
+        type: Date,
         required: true,
     },
     expectedPaymentAmount: {

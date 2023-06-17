@@ -63,8 +63,8 @@ const ExpenseInput = () => {
             </select>
             <input
                 ref = { dayRef }
-                type = 'number'
-                placeholder = 'Expected Payment Due Date ie 1, 15, 31'
+                type = 'date'
+                placeholder = 'Due Date'
             />
             <input 
                 ref = {expectedPaymentRef}

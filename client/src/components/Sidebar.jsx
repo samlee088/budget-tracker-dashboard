@@ -47,10 +47,6 @@ const navItems = [
       icon: <ReceiptLongOutlined />,
     },
     {
-      text: "Geography",
-      icon: <PublicOutlined />,
-    },
-    {
       text: "Analytics",
       icon: null,
     },
@@ -63,7 +59,7 @@ const navItems = [
       icon: <TodayOutlined />,
     },
     {
-      text: "Monthly",
+      text: "Calendar",
       icon: <CalendarMonthOutlined />,
     },
     {

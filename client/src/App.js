@@ -10,6 +10,7 @@ import Layout from 'scenes/layout';
 import Dashboard from 'scenes/dashboard';
 import Expenses from 'scenes/expenses';
 import Login from 'scenes/login';
+import CalendarView from 'scenes/calendar';
 
 function useCurrentLocation() {
   const [location, setLocation] = useState(window.location.pathname);
@@ -65,6 +66,7 @@ function App() {
               <Route element={<Layout />}>
                 <Route path='/' element={<Dashboard />} />
                 <Route path='/expenses' element={<Expenses />} />
+                <Route path='calendar' element={<CalendarView />} />
               </Route>
             )}
           </Routes>
