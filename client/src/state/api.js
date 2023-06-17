@@ -12,7 +12,7 @@ export const postApi = createApi({
         return headers;
       },
   }),
-    tagTypes: ['Posts'],
+    tagTypes: ['Posts', 'Expenses'],
     endpoints: (build) => ({
       getPosts: build.query({
         query: () => 'posts',
@@ -70,6 +70,13 @@ export const postApi = createApi({
         query: (id) => `post/${id}`,
         providesTags: (result, error, id) => [{ type: 'Posts', id }],
       }),
+      getExpenses: build.query({
+        query: () => ({
+          url: 'api/expenses/all',
+          method: 'GET',
+        }),
+        provideTags: ['Expenses'],
+      }),
       updatePost: build.mutation({
         query(data) {
           const { id, ...body } = data
@@ -98,6 +105,7 @@ export const postApi = createApi({
   
 export const {
     useGetPostsQuery,
+    useGetExpensesQuery,
     useAddPostMutation,
     useGetPostQuery,
     useUpdatePostMutation,

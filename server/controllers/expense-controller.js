@@ -1,5 +1,24 @@
 import { User, Expense } from '../models/index.js';
 
+
+
+export const getAllExpenses = async (req, res) => {
+  try{
+
+    const userId = req.user._id; // Assuming the user ID is available in req.user._id
+    const user = await User.findById(userId);
+    const expenses = await Expense.find({ _id: { $in: user.savedExpenses } });
+    res.status(200).json(expenses);
+    
+
+  } catch (error) {
+    console.error(error);
+    res.status(200).json(error);
+  }
+}
+
+
+
 export const addExpense = async (req, res) => {
     try {
       const expense = await Expense.create({
@@ -19,7 +38,9 @@ export const addExpense = async (req, res) => {
       console.error(error);
       res.status(200).json(error);
     }
-  };
+};
+
+ 
 
 
 
