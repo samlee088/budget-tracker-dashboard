@@ -14,18 +14,15 @@ const CalendarView = () => {
     const { data, isLoading } = useGetExpensesQuery();
     console.log(data);
 
-    const events = [
-        {
-            start: new Date(),
-            end: new Date(),
-            title: "Event 1",
-        },
-        {
-            start: new Date(),
-            end: new Date(),
-            title: "Event 2",
-        },
-    ];
+    const events = useMemo(() => {
+        if (!data) return [];
+    
+        return data.map((expense) => ({
+          start: new Date(expense.expectedPaymentDate),
+          end: new Date(expense.expectedPaymentDate),
+          title: expense.name,
+        }));
+      }, [data]);
 
   return (
     <div>

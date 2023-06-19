@@ -52,7 +52,7 @@ export const postApi = createApi({
           method: 'POST',
           body: { name, frequency, expectedPaymentDate, expectedPaymentAmount, user },
         }),
-        invalidatesTags: [{ type: 'Posts', id: 'LIST' }],
+        invalidatesTags: ['Expenses'],
       }),
       addPost: build.mutation({
         query(body) {
@@ -75,7 +75,7 @@ export const postApi = createApi({
           url: 'api/expenses/all',
           method: 'GET',
         }),
-        provideTags: ['Expenses'],
+        providesTags: ['Expenses'],
       }),
       updatePost: build.mutation({
         query(data) {
