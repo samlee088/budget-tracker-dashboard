@@ -59,7 +59,7 @@ const ExpenseInput = () => {
                 <option value='weekly'>Weekly</option>
                 <option value='bi-weekly'>Bi-Weekly</option>
                 <option value='monthly'>Monthly</option>
-                <option value='semi-annual'>Bi-Yearly</option>
+                <option value='semi-annual'>Semi-Annual</option>
             </select>
             <input
                 ref = { dayRef }

@@ -31,12 +31,14 @@ function useCurrentLocation() {
 
 
 function App() {
+  
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
   const getUserFromToken = (token) => {
     try{
       const user = jwtDecode(token);
+      console.log(user)
       return user;
     } catch (error) {
       return null;
