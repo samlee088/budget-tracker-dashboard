@@ -76,7 +76,18 @@ export const addExpense = async (req, res) => {
 };
 
  
+export const addPayment = async ( req, res ) => {
+
+    try{
+      
+      const expenseId = req.expenseId;
+      const expense = await Expense.findById(expenseId);
 
 
+    } catch(error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
+}
 
 
