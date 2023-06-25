@@ -1,5 +1,5 @@
 import { User, Expense } from '../models/index.js';
-
+import moment from 'moment';
 
 export const getAllExpenses = async (req, res) => {
   try{
@@ -21,6 +21,8 @@ export const getAllExpenses = async (req, res) => {
 
 export const addExpense = async (req, res) => {
     try {
+
+      console.log(req.body);
       const currentDate = moment();
       const futureDate = currentDate.add(6, 'months');
 
@@ -42,7 +44,7 @@ export const addExpense = async (req, res) => {
 
         switch(req.body.frequency) {
           case 'once' : 
-            endDate = endDate.add(7, 'months')
+            endDate = endDate.add(11, 'months')
             break;
           case 'daily' :
             endDate = endDate.add(1, 'day')
