@@ -1,5 +1,4 @@
 import { User, Expense } from '../models/index.js';
-import moment from 'moment';
 
 
 export const getAllExpenses = async (req, res) => {
