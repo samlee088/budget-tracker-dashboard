@@ -67,7 +67,7 @@ export const addExpense = async (req, res) => {
 
       }
 
-      return res.json('successfully added expense');
+      return res.json(req.body);
     } catch (error) {
       console.error(error);
       res.status(500).json(error);

@@ -2,6 +2,7 @@ import React, { useRef }  from 'react'
 import { Box } from '@mui/material';
 import { useAddExpenseMutation } from 'state/api';
 import Auth from '../utils/auth';
+import { useState } from 'react';
 
 const ExpenseInput = () => {
 
@@ -9,6 +10,7 @@ const ExpenseInput = () => {
     const occurrenceRef = useRef(null);
     const dayRef = useRef(null);
     const expectedPaymentRef = useRef(null);
+    const [response, setResponse] = useState('')
 
     const [addExpensePost, {isLoading}] = useAddExpenseMutation();
 
@@ -34,7 +36,7 @@ const ExpenseInput = () => {
             console.log(response);
 
             const expense = response.data;
-
+            setResponse(expense.name);
             console.log(expense);
 
         } catch (error) {
@@ -45,6 +47,7 @@ const ExpenseInput = () => {
     }
 
   return (
+    <Box>
     <Box>
         <form>
             <Box sx={{display: 'flex', flexDirection: 'column', width: '50%'}}>
@@ -80,6 +83,12 @@ const ExpenseInput = () => {
             </button>
             </Box>
         </form>
+
+    </Box>
+
+    <Box>
+        <h1>Successful input for {response}</h1>
+    </Box>
 
     </Box>
   )

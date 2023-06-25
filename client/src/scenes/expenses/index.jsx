@@ -1,6 +1,7 @@
 import React from 'react'
-import ExpenseInput from 'components/ExpenseInput';
 import { Box } from '@mui/material';
+import ExpenseInput from 'components/ExpenseInput';
+import ExpenseDataGrid from 'components/ExpenseDataGrid';
 
 const Expenses = () => {
   return (
@@ -10,6 +11,10 @@ const Expenses = () => {
 
       <Box>
         <ExpenseInput/>
+      </Box>
+
+      <Box>
+        <ExpenseDataGrid/>
       </Box>
 
 

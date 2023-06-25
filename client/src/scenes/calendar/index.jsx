@@ -4,7 +4,6 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Box } from "@mui/material";
 import { useGetExpensesQuery } from "state/api";
-import Auth from '../../utils/auth';
 
 
 const CalendarView = () => {
