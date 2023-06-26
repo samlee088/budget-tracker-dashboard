@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/add').post( authMiddleware, addExpense );
 router.route('/all').get(authMiddleware, getAllExpenses);
-router.route('/payment').post( authMiddleware, addPayment );
+router.route('/addPayment').post( authMiddleware, addPayment );
 
 
 export default router;

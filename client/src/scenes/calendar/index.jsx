@@ -4,6 +4,7 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from "@mui/material";
 import { useGetExpensesQuery } from "state/api";
+import { useAddPaymentMutation } from "state/api";
 
 const CalendarView = () => {
   const localizer = momentLocalizer(moment);
@@ -12,6 +13,8 @@ const CalendarView = () => {
   const [selectedEvent, setSelectedEvent] = React.useState(null);
   const [paymentDate, setPaymentDate] = React.useState("");
   const [paymentAmount, setPaymentAmount] = React.useState("");
+  const [addPaymentPost] = useAddPaymentMutation();
+
 
   const events = useMemo(() => {
     if (!data) return [];
@@ -38,7 +41,30 @@ const CalendarView = () => {
 
   const handleSubmit = async() => {
 
+    try{
+      console.log(selectedEvent.expenseId);
+      console.log(paymentAmount);
+      console.log(paymentDate);
+
+    const addPaymentResponse = await addPaymentPost({
+      _id: selectedEvent.expenseId,
+      actualPaymentAmount: paymentAmount,
+      actualPaymentDate: paymentDate
+    })
+
+    console.log(addPaymentResponse);
+    
     closePopup();
+
+    setPaymentDate("");
+    setPaymentAmount("");
+    
+
+
+    } catch(error) {
+      console.error(error);
+    }
+   
   }
 
   return (

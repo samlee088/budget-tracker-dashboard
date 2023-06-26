@@ -64,8 +64,6 @@ export const addExpense = async (req, res) => {
           default:
             break;
         }
-
-
       }
 
       return res.json(req.body);
@@ -79,10 +77,15 @@ export const addExpense = async (req, res) => {
 export const addPayment = async ( req, res ) => {
 
     try{
-      
-      const expenseId = req.expenseId;
-      const expense = await Expense.findById(expenseId);
+      console.log(req.body)
 
+      const expenseUpdate = 
+        await Expense.findOneAndUpdate(
+          {_id: req.body._id},
+          {  $addToSet: { actualPaymentAmount: req.body.actualPaymentAmount, actualPaymentDate: req.body.actualPaymentDate }}
+        )
+        
+      res.status(200).json(expenseUpdate);
 
     } catch(error) {
       console.log(error);

@@ -54,6 +54,14 @@ export const postApi = createApi({
         }),
         invalidatesTags: ['Expenses'],
       }),
+      addPayment: build.mutation({
+        query: ({actualPaymentDate,actualPaymentAmount, _id}) => ({
+          url: 'api/expenses/addPayment',
+          method: 'POST',
+          body: {actualPaymentDate, actualPaymentAmount, _id},
+        }),
+        invalidatesTags: ['Expenses'],
+      }),
       addPost: build.mutation({
         query(body) {
           return {
@@ -113,6 +121,8 @@ export const {
     useAddUserMutation,
     useLoginUserMutation,
     useAddExpenseMutation,
+    useAddPaymentMutation,
+    
 } = postApi
 
 
