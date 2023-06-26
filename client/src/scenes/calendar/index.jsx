@@ -8,7 +8,7 @@ import { useAddPaymentMutation } from "state/api";
 
 const CalendarView = () => {
   const localizer = momentLocalizer(moment);
-  const { data, isLoading } = useGetExpensesQuery();
+  const { data} = useGetExpensesQuery();
   const [showPopup, setShowPopup] = React.useState(false);
   const [showPopupPayment, setShowPopupPayment] = React.useState(false);
   const [selectedEvent, setSelectedEvent] = React.useState(null);

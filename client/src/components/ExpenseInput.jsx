@@ -48,47 +48,47 @@ const ExpenseInput = () => {
 
   return (
     <Box>
-    <Box>
-        <form>
-            <Box sx={{display: 'flex', flexDirection: 'column', width: '50%'}}>
-            <input
-                ref = { nameRef }
-                type = 'text'
-                placeholder = 'Name'
-            />
-            <select id='occurrence' name='frequency' ref={occurrenceRef}>
-                <option value='once'>Once</option>
-                <option value='daily'>Daily</option>
-                <option value='weekly'>Weekly</option>
-                <option value='bi-weekly'>Bi-Weekly</option>
-                <option value='monthly'>Monthly</option>
-                <option value='semi-annual'>Semi-Annual</option>
-            </select>
-            <input
-                ref = { dayRef }
-                type = 'date'
-                placeholder = 'Due Date'
-            />
-            <input 
-                ref = {expectedPaymentRef}
-                type="number" 
-                id="dollar-input" 
-                name="dollar-input" 
-                min="0.00" 
-                max="10000.00"
-                placeholder = "Expected Payment Amount"
-            />
-            <button onClick={addExpense}> 
-                Add Expense 
-            </button>
-            </Box>
-        </form>
+        <Box>
+            <form>
+                <Box sx={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                <input
+                    ref = { nameRef }
+                    type = 'text'
+                    placeholder = 'Name'
+                />
+                <select id='occurrence' name='frequency' ref={occurrenceRef}>
+                    <option value='once'>Once</option>
+                    <option value='daily'>Daily</option>
+                    <option value='weekly'>Weekly</option>
+                    <option value='bi-weekly'>Bi-Weekly</option>
+                    <option value='monthly'>Monthly</option>
+                    <option value='semi-annual'>Semi-Annual</option>
+                </select>
+                <input
+                    ref = { dayRef }
+                    type = 'date'
+                    placeholder = 'Due Date'
+                />
+                <input 
+                    ref = {expectedPaymentRef}
+                    type="number" 
+                    id="dollar-input" 
+                    name="dollar-input" 
+                    min="0.00" 
+                    max="10000.00"
+                    placeholder = "Expected Payment Amount"
+                />
+                <button onClick={addExpense}> 
+                    Add Expense 
+                </button>
+                </Box>
+            </form>
 
-    </Box>
+        </Box>
 
-    <Box>
-        <h1>Successful input for {response}</h1>
-    </Box>
+        <Box>
+            <h1>Successful input for {response}</h1>
+        </Box>
 
     </Box>
   )

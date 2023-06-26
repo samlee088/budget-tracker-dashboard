@@ -9,7 +9,11 @@ const Expenses = () => {
       <h1>Expenses</h1>
 
 
-      <Box>
+     <Box 
+      alignItems="center"
+      justifyContent = 'center' 
+      display = 'flex'
+    >
         <ExpenseInput/>
       </Box>
 
