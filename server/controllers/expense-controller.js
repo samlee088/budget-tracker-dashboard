@@ -82,7 +82,7 @@ export const addPayment = async ( req, res ) => {
       const expenseUpdate = 
         await Expense.findOneAndUpdate(
           {_id: req.body._id},
-          {  $addToSet: { actualPaymentAmount: req.body.actualPaymentAmount, actualPaymentDate: req.body.actualPaymentDate }}
+          {  $set: { actualPaymentAmount: req.body.actualPaymentAmount, actualPaymentDate: req.body.actualPaymentDate }}
         )
         
       res.status(200).json(expenseUpdate);

@@ -31,11 +31,12 @@ const CalendarView = () => {
       };
   
       const paymentEvent = {
-        start: new Date(expense.actualPaymentDate),
-        end: new Date(expense.actualPaymentDate),
+        start: moment(expense.actualPaymentDate).add(1, 'day').toDate(),
+        end: moment(expense.actualPaymentDate).add(1, 'day').toDate(),
         title: expense.name,
         amount: expense.actualPaymentAmount,
         type: 'payment',
+        expenseId: expense._id,
       };
   
       if (expense.actualPaymentDate) {
