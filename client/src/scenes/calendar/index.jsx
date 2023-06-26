@@ -10,6 +10,7 @@ const CalendarView = () => {
   const localizer = momentLocalizer(moment);
   const { data, isLoading } = useGetExpensesQuery();
   const [showPopup, setShowPopup] = React.useState(false);
+  const [showPopupPayment, setShowPopupPayment] = React.useState(false);
   const [selectedEvent, setSelectedEvent] = React.useState(null);
   const [paymentDate, setPaymentDate] = React.useState("");
   const [paymentAmount, setPaymentAmount] = React.useState("");
@@ -17,29 +18,73 @@ const CalendarView = () => {
 
 
   const events = useMemo(() => {
+    console.log(data)
     if (!data) return [];
-
-    return data.map((expense) => ({
-      start: new Date(expense.expectedPaymentDate),
-      end: new Date(expense.expectedPaymentDate),
-      title: expense.name,
-      expenseId: expense._id,
-    }));
+  
+    return data.flatMap((expense) => {
+      const expenseEvent = {
+        start: new Date(expense.expectedPaymentDate),
+        end: new Date(expense.expectedPaymentDate),
+        title: expense.name,
+        expenseId: expense._id,
+        type: 'expense',
+      };
+  
+      const paymentEvent = {
+        start: new Date(expense.actualPaymentDate),
+        end: new Date(expense.actualPaymentDate),
+        title: expense.name,
+        amount: expense.actualPaymentAmount,
+        type: 'payment',
+      };
+  
+      if (expense.actualPaymentDate) {
+        return [paymentEvent, expenseEvent];
+      }
+  
+      return [expenseEvent];
+    });
   }, [data]);
 
-  const clickEvent = (event) => {
-    console.log(event);
-    const mongoExpenseId = event.expenseId;
-    console.log(mongoExpenseId);
-    setSelectedEvent(event);
-    setShowPopup(true);
+  const eventStyleGetter = (event, start, end, isSelected) => {
+    const style = {
+      backgroundColor: event.type === 'expense' ? 'blue' : 'green',
+      color: 'white',
+    };
+
+    return {
+      style,
+    };
   };
 
-  const closePopup = () => {
+  
+  
+  const clickEvent = (event) => {
+    if(event.type === 'expense') {
+      console.log(event);
+      const mongoExpenseId = event.expenseId;
+      console.log(mongoExpenseId);
+      setSelectedEvent(event);
+      setShowPopup(true);
+    } else {
+      console.log(event);
+      const mongoExpenseId = event.expenseId;
+      console.log(mongoExpenseId);
+      setSelectedEvent(event);
+      setShowPopupPayment(true);
+    }
+    
+  };
+
+  const closePopupExpense = () => {
     setShowPopup(false);
   };
 
-  const handleSubmit = async() => {
+  const closePopupPayment = () => {
+    setShowPopupPayment(false);
+  };
+
+  const handleSubmitExpense = async() => {
 
     try{
       console.log(selectedEvent.expenseId);
@@ -54,7 +99,35 @@ const CalendarView = () => {
 
     console.log(addPaymentResponse);
     
-    closePopup();
+    closePopupExpense();
+
+    setPaymentDate("");
+    setPaymentAmount("");
+    
+
+
+    } catch(error) {
+      console.error(error);
+    }
+   
+  }
+
+  const handleSubmitPayment = async() => {
+
+    try{
+      console.log(selectedEvent.expenseId);
+      console.log(paymentAmount);
+      console.log(paymentDate);
+
+    const addPaymentResponse = await addPaymentPost({
+      _id: selectedEvent.expenseId,
+      actualPaymentAmount: paymentAmount,
+      actualPaymentDate: paymentDate
+    })
+
+    console.log(addPaymentResponse);
+    
+    closePopupPayment();
 
     setPaymentDate("");
     setPaymentAmount("");
@@ -75,11 +148,12 @@ const CalendarView = () => {
           events={events}
           views={[Views.MONTH]}
           onSelectEvent={clickEvent}
+          eventPropGetter={eventStyleGetter}
         />
       </Box>
         <Dialog
         open={showPopup}
-        onClose={closePopup}
+        onClose={closePopupExpense}
       >
         <DialogTitle>{selectedEvent?.title}</DialogTitle>
         <DialogContent>
@@ -103,8 +177,38 @@ const CalendarView = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={closePopup}>Close</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={closePopupExpense}>Close</Button>
+          <Button onClick={handleSubmitExpense}>Submit</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={showPopupPayment}
+        onClose={closePopupPayment}
+      >
+        <DialogTitle>{selectedEvent?.title} Payment</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{m:'20px'}}>
+            Payment Date: {selectedEvent?.start.toLocaleString()} Payment Amount: {selectedEvent?.amount}
+          </DialogContentText>
+          <TextField
+            label="Payment Date"
+            type="date"
+            value={paymentDate}
+            onChange={(e) => setPaymentDate(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            label="Payment Amount"
+            type="number"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closePopupPayment}>Close</Button>
+          <Button onClick={handleSubmitPayment}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

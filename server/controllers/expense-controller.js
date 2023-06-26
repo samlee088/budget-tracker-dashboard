@@ -6,7 +6,7 @@ export const getAllExpenses = async (req, res) => {
 
     const userId = req.user._id; 
     const user = await User.findById(userId);
-    const expenses = await Expense.find({ _id: { $in: user.savedExpenses } });
+    const expenses = await Expense.find({ _id: { $in: user.savedExpenses } }).lean();
 
     res.status(200).json(expenses);
     

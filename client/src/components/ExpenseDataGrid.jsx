@@ -10,16 +10,30 @@ const ExpenseDataGrid = () => {
 
     let convertedData = [];
     if (data) {
-      convertedData = data.map((expense) => {
-        const convertedExpense = { ...expense }; // Create a copy of the expense object
-  
-        // Convert UTC dates to non-UTC using Moment.js
-        convertedExpense.expectedPaymentDate = moment.utc(expense.expectedPaymentDate).local().format('YYYY-MM-DD');
-        convertedExpense.actualPaymentDate = moment.utc(expense.actualPaymentDate).local().format('YYYY-MM-DD');
-  
-        return convertedExpense;
-      });
-    }
+        convertedData = data.map((expense) => {
+          const convertedExpense = { ...expense }; // Create a copy of the expense object
+      
+          // Convert UTC dates to non-UTC using Moment.js
+          convertedExpense.expectedPaymentDate = moment.utc(expense.expectedPaymentDate).local().format('YYYY-MM-DD');
+      
+          // Check if actualPaymentDate exists and is an array
+          if (Array.isArray(expense.actualPaymentDate) && expense.actualPaymentDate.length > 0) {
+            // Take the first item from the array and convert it to the desired format
+            convertedExpense.actualPaymentDate = moment.utc(expense.actualPaymentDate[0]).local().format('YYYY-MM-DD');
+          } else {
+            // If actualPaymentDate is not defined or empty, assign an empty string
+            convertedExpense.actualPaymentDate = '';
+          }
+      
+          // Check if actualPaymentAmount exists, otherwise assign an empty string
+          convertedExpense.actualPaymentAmount = expense.actualPaymentAmount || '';
+      
+          return convertedExpense;
+        });
+      }
+      
+      
+      
     
     const columns = [
         {
