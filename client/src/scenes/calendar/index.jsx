@@ -25,15 +25,15 @@ const CalendarView = () => {
       const expenseEvent = {
         start: new Date(expense.expectedPaymentDate),
         end: new Date(expense.expectedPaymentDate),
-        title: expense.name,
+        title: `${expense.name} Expense`,
         expenseId: expense._id,
-        type: 'expense',
+        type: expense.actualPaymentAmount? 'expensePaid' : 'expense',
       };
   
       const paymentEvent = {
         start: moment(expense.actualPaymentDate).add(1, 'day').toDate(),
         end: moment(expense.actualPaymentDate).add(1, 'day').toDate(),
-        title: expense.name,
+        title: `${expense.name} Payment`,
         amount: expense.actualPaymentAmount,
         type: 'payment',
         expenseId: expense._id,
