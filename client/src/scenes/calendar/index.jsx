@@ -12,13 +12,16 @@ import PopupPayment from "components/PopupPayment";
 const CalendarView = () => {
   const localizer = momentLocalizer(moment);
   const { data} = useGetExpensesQuery();
-  const [showPopup, setShowPopup] = React.useState(false);
-  const [showPopupPayment, setShowPopupPayment] = React.useState(false);
-  const [showPopupPaymentExpensePaid, setShowPopupExpensePaid] = React.useState(false);
-  const [selectedEvent, setSelectedEvent] = React.useState(null);
-  const [paymentDate, setPaymentDate] = React.useState("");
-  const [paymentAmount, setPaymentAmount] = React.useState("");
-  const [addPaymentPost] = useAddPaymentMutation();
+  const [ showPopup, setShowPopup ] = React.useState(false);
+  const [ showPopupPayment, setShowPopupPayment ] = React.useState(false);
+  const [ showPopupPaymentExpensePaid, setShowPopupExpensePaid ] = React.useState(false);
+  const [ selectedEvent, setSelectedEvent ] = React.useState(null);
+  const [ paymentDate, setPaymentDate ] = React.useState("");
+  const [ paymentAmount, setPaymentAmount ] = React.useState("");
+  const [ addPaymentPost ] = useAddPaymentMutation();
+  const [ expenseTrigger, setExpenseTrigger ] = React.useState(false);
+  const [ expensePaidTrigger, setExpensePaidTrigger ] = React.useState(false);
+  const [ paymentTrigger, setPaymentTrigger ] = React.useState(false);
 
 
   const events = useMemo(() => {
@@ -31,10 +34,14 @@ const CalendarView = () => {
         end: new Date(expense.expectedPaymentDate),
         title: `${expense.name} Expense`,
         expenseId: expense._id,
+        expectedPayment: expense.expectedPaymentAmount,
         type: expense.actualPaymentAmount? 'expensePaid' : 'expense',
+        paymentDate: expense.actualPaymentAmount? moment(expense.actualPaymentDate).add(1, 'day').toDate() : '',
+        paymentAmount : expense.actualPaymentAmount? expense.actualPaymentAmount: '',
       };
   
       const paymentEvent = {
+        originalDueDate : new Date(expense.expectedPaymentDate),
         start: moment(expense.actualPaymentDate).add(1, 'day').toDate(),
         end: moment(expense.actualPaymentDate).add(1, 'day').toDate(),
         title: `${expense.name} Payment`,
@@ -70,19 +77,24 @@ const CalendarView = () => {
       const mongoExpenseId = event.expenseId;
       console.log(mongoExpenseId);
       setSelectedEvent(event);
+      setExpenseTrigger(true);
+      console.log(selectedEvent)
       setShowPopup(true);
+      console.log(showPopup)
+
     } else if(event.type === 'expensePaid') {
       console.log(event);
       const mongoExpenseId = event.expenseId;
       console.log(mongoExpenseId);
       setSelectedEvent(event);
+      setExpensePaidTrigger(true);
       setShowPopupExpensePaid(true);
-      
     } else {
       console.log(event);
       const mongoExpenseId = event.expenseId;
       console.log(mongoExpenseId);
       setSelectedEvent(event);
+      setPaymentTrigger(true);
       setShowPopupPayment(true);
     }
     
@@ -108,6 +120,8 @@ const CalendarView = () => {
         setPaymentDate = { setPaymentDate }
         paymentAmount = { paymentAmount }
         setPaymentAmount = { setPaymentAmount }
+        paymentTrigger = { paymentTrigger }
+        setPaymentTrigger = { setPaymentTrigger }
       />
       <PopupExpense
         selectedEvent = { selectedEvent }
@@ -117,10 +131,15 @@ const CalendarView = () => {
         setPaymentDate = { setPaymentDate }
         paymentAmount = { paymentAmount }
         setPaymentAmount = { setPaymentAmount }
+        expenseTrigger = { expenseTrigger }
+        setExpenseTrigger = { setExpenseTrigger }
       />
       <PopupExpensePaid 
-        setShowPopupExpensePaid={setShowPopupExpensePaid} showPopupPaymentExpensePaid ={showPopupPaymentExpensePaid}
-        selectedEvent={selectedEvent}
+        selectedEvent = { selectedEvent }
+        setShowPopupExpensePaid = { setShowPopupExpensePaid } 
+        showPopupPaymentExpensePaid = { showPopupPaymentExpensePaid }
+        expensePaidTrigger = { expensePaidTrigger }
+        setExpensePaidTrigger = { setExpensePaidTrigger }
       />
     </div>
   );
