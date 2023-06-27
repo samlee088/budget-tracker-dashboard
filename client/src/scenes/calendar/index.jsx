@@ -5,12 +5,16 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from "@mui/material";
 import { useGetExpensesQuery } from "state/api";
 import { useAddPaymentMutation } from "state/api";
+import PopupExpensePaid from 'components/PopupExpensePaid';
+import PopupExpense from "components/PopupExpense";
+import PopupPayment from "components/PopupPayment";
 
 const CalendarView = () => {
   const localizer = momentLocalizer(moment);
   const { data} = useGetExpensesQuery();
   const [showPopup, setShowPopup] = React.useState(false);
   const [showPopupPayment, setShowPopupPayment] = React.useState(false);
+  const [showPopupPaymentExpensePaid, setShowPopupExpensePaid] = React.useState(false);
   const [selectedEvent, setSelectedEvent] = React.useState(null);
   const [paymentDate, setPaymentDate] = React.useState("");
   const [paymentAmount, setPaymentAmount] = React.useState("");
@@ -67,6 +71,13 @@ const CalendarView = () => {
       console.log(mongoExpenseId);
       setSelectedEvent(event);
       setShowPopup(true);
+    } else if(event.type === 'expensePaid') {
+      console.log(event);
+      const mongoExpenseId = event.expenseId;
+      console.log(mongoExpenseId);
+      setSelectedEvent(event);
+      setShowPopupExpensePaid(true);
+      
     } else {
       console.log(event);
       const mongoExpenseId = event.expenseId;
@@ -77,69 +88,6 @@ const CalendarView = () => {
     
   };
 
-  const closePopupExpense = () => {
-    setShowPopup(false);
-  };
-
-  const closePopupPayment = () => {
-    setShowPopupPayment(false);
-  };
-
-  const handleSubmitExpense = async() => {
-
-    try{
-      console.log(selectedEvent.expenseId);
-      console.log(paymentAmount);
-      console.log(paymentDate);
-
-    const addPaymentResponse = await addPaymentPost({
-      _id: selectedEvent.expenseId,
-      actualPaymentAmount: paymentAmount,
-      actualPaymentDate: paymentDate
-    })
-
-    console.log(addPaymentResponse);
-    
-    closePopupExpense();
-
-    setPaymentDate("");
-    setPaymentAmount("");
-    
-
-
-    } catch(error) {
-      console.error(error);
-    }
-   
-  }
-
-  const handleSubmitPayment = async() => {
-
-    try{
-      console.log(selectedEvent.expenseId);
-      console.log(paymentAmount);
-      console.log(paymentDate);
-
-    const addPaymentResponse = await addPaymentPost({
-      _id: selectedEvent.expenseId,
-      actualPaymentAmount: paymentAmount,
-      actualPaymentDate: paymentDate
-    })
-
-    console.log(addPaymentResponse);
-    
-    closePopupPayment();
-
-    setPaymentDate("");
-    setPaymentAmount("");
-    
-
-
-    } catch(error) {
-      console.error(error);
-    }
-   
-  }
 
   return (
     <div>
@@ -152,66 +100,28 @@ const CalendarView = () => {
           eventPropGetter={eventStyleGetter}
         />
       </Box>
-        <Dialog
-        open={showPopup}
-        onClose={closePopupExpense}
-      >
-        <DialogTitle>{selectedEvent?.title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{m:'20px'}}>
-            Expense ID: {selectedEvent?.expenseId}
-          </DialogContentText>
-          <TextField
-            label="Payment Date"
-            type="date"
-            value={paymentDate}
-            onChange={(e) => setPaymentDate(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            label="Payment Amount"
-            type="number"
-            value={paymentAmount}
-            onChange={(e) => setPaymentAmount(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closePopupExpense}>Close</Button>
-          <Button onClick={handleSubmitExpense}>Submit</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={showPopupPayment}
-        onClose={closePopupPayment}
-      >
-        <DialogTitle>{selectedEvent?.title} Payment</DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{m:'20px'}}>
-            Payment Date: {selectedEvent?.start.toLocaleString()} Payment Amount: {selectedEvent?.amount}
-          </DialogContentText>
-          <TextField
-            label="Payment Date"
-            type="date"
-            value={paymentDate}
-            onChange={(e) => setPaymentDate(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-          <TextField
-            label="Payment Amount"
-            type="number"
-            value={paymentAmount}
-            onChange={(e) => setPaymentAmount(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closePopupPayment}>Close</Button>
-          <Button onClick={handleSubmitPayment}>Submit</Button>
-        </DialogActions>
-      </Dialog>
+      <PopupPayment
+        selectedEvent = { selectedEvent }
+        setShowPopupPayment = { setShowPopupPayment }
+        showPopupPayment = { showPopupPayment }
+        paymentDate = { paymentDate }
+        setPaymentDate = { setPaymentDate }
+        paymentAmount = { paymentAmount }
+        setPaymentAmount = { setPaymentAmount }
+      />
+      <PopupExpense
+        selectedEvent = { selectedEvent }
+        setShowPopup = { setShowPopup }
+        showPopup = { showPopup }
+        paymentDate = { paymentDate }
+        setPaymentDate = { setPaymentDate }
+        paymentAmount = { paymentAmount }
+        setPaymentAmount = { setPaymentAmount }
+      />
+      <PopupExpensePaid 
+        setShowPopupExpensePaid={setShowPopupExpensePaid} showPopupPaymentExpensePaid ={showPopupPaymentExpensePaid}
+        selectedEvent={selectedEvent}
+      />
     </div>
   );
 };
