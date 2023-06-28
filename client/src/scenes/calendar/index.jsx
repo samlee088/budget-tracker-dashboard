@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from "@mui/material";
+import { Box, } from "@mui/material";
 import { useGetExpensesQuery } from "state/api";
 import { useAddPaymentMutation } from "state/api";
 import PopupExpensePaid from 'components/PopupExpensePaid';

@@ -39,7 +39,7 @@ const navItems = [
       icon: <HomeOutlined />,
     },
     {
-      text: "Data",
+      text: "Data Management",
       icon: null,
     },
     {
@@ -55,11 +55,11 @@ const navItems = [
       icon: <PointOfSaleOutlined />,
     },
     {
-      text: "Daily",
+      text: "Calendar",
       icon: <TodayOutlined />,
     },
     {
-      text: "Calendar",
+      text: "Yearly",
       icon: <CalendarMonthOutlined />,
     },
     {
