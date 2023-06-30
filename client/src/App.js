@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes, } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import jwtDecode from 'jwt-decode';
 import { themeSettings } from "theme";
 import Layout from 'scenes/layout';
@@ -12,6 +12,8 @@ import Expenses from 'scenes/expenses';
 import Login from 'scenes/login';
 import CalendarView from 'scenes/calendar';
 import YearlyView from 'scenes/yearly';
+import BreakdownView from 'scenes/breakdown';
+
 
 function useCurrentLocation() {
   const [location, setLocation] = useState(window.location.pathname);
@@ -67,10 +69,11 @@ function App() {
               <Route path='/' element={<Login />} />
             ) : (
               <Route element={<Layout />}>
-                <Route path='/' element={<Dashboard />} />
-                <Route path='/expenses' element={<Expenses />} />
-                <Route path='/calendar' element={<CalendarView />} />
-                <Route path='/yearly' element={<YearlyView/>} />
+                <Route path = '/' element={<Dashboard />} />
+                <Route path = '/expenses' element={<Expenses />} />
+                <Route path = '/calendar' element={<CalendarView />} />
+                <Route path = '/yearly' element={<YearlyView/>} />
+                <Route path = 'breakdown' element={<BreakdownView />} />
               </Route>
             )}
           </Routes>

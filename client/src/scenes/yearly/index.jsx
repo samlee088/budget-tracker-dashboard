@@ -12,6 +12,8 @@ const YearlyView = () => {
     const events = useMemo(() => {
         console.log(data)
         if (!data) return [];
+        
+        const today = moment();
       
         const eventsList = data.flatMap((expense) => {
             const day = new Date(expense.expectedPaymentDate)
