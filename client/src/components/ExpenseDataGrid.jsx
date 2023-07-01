@@ -53,7 +53,7 @@ const ExpenseDataGrid = () => {
         },
         {
             field: "expectedPaymentAmount",
-            headerName: "Payment Payment Amount",
+            headerName: "Expected Payment Amount",
             flex: 1.0,
         },
         {

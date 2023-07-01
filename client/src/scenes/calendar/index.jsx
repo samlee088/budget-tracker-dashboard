@@ -27,6 +27,7 @@ const CalendarView = () => {
   const events = useMemo(() => {
     console.log(data)
     if (!data) return [];
+    const today = moment();
   
     return data.flatMap((expense) => {
       const expenseEvent = {
@@ -35,7 +36,7 @@ const CalendarView = () => {
         title: `${expense.name} Expense`,
         expenseId: expense._id,
         expectedPayment: expense.expectedPaymentAmount,
-        type: expense.actualPaymentAmount? 'expensePaid' : 'expense',
+        type: expense.actualPaymentAmount? 'expensePaid' :  (new Date(expense.expectedPaymentDate) < new Date(today)) ? 'late' : 'expense',
         paymentDate: expense.actualPaymentAmount? moment(expense.actualPaymentDate).add(1, 'day').toDate() : '',
         paymentAmount : expense.actualPaymentAmount? expense.actualPaymentAmount: '',
       };
@@ -60,7 +61,7 @@ const CalendarView = () => {
 
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
-      backgroundColor: event.type === 'expense' ? 'blue' : 'green',
+      backgroundColor: event.type === 'payment' ? 'green' : event.type === 'expensePaid' ? 'blue' : event.type === 'late' ? 'red' : 'orange',
       color: 'white',
     };
 
@@ -89,7 +90,16 @@ const CalendarView = () => {
       setSelectedEvent(event);
       setExpensePaidTrigger(true);
       setShowPopupExpensePaid(true);
-    } else {
+    } else if (event.type === 'late') {
+      console.log(event);
+      const mongoExpenseId = event.expenseId;
+      console.log(mongoExpenseId);
+      setSelectedEvent(event);
+      setExpenseTrigger(true);
+      console.log(selectedEvent)
+      setShowPopup(true);
+      console.log(showPopup)
+    }else {
       console.log(event);
       const mongoExpenseId = event.expenseId;
       console.log(mongoExpenseId);
