@@ -22,7 +22,7 @@ const CalendarView = () => {
   const [ expenseTrigger, setExpenseTrigger ] = React.useState(false);
   const [ expensePaidTrigger, setExpensePaidTrigger ] = React.useState(false);
   const [ paymentTrigger, setPaymentTrigger ] = React.useState(false);
-
+  
 
   const events = useMemo(() => {
     console.log(data)

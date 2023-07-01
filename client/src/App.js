@@ -13,7 +13,7 @@ import Login from 'scenes/login';
 import CalendarView from 'scenes/calendar';
 import YearlyView from 'scenes/yearly';
 import BreakdownView from 'scenes/breakdown';
-
+import OverviewView from 'scenes/overview';
 
 function useCurrentLocation() {
   const [location, setLocation] = useState(window.location.pathname);
@@ -73,7 +73,8 @@ function App() {
                 <Route path = '/expenses' element={<Expenses />} />
                 <Route path = '/calendar' element={<CalendarView />} />
                 <Route path = '/yearly' element={<YearlyView/>} />
-                <Route path = 'breakdown' element={<BreakdownView />} />
+                <Route path = '/breakdown' element={<BreakdownView />} />
+                <Route path = '/overview' element = { <OverviewView /> } />
               </Route>
             )}
           </Routes>
