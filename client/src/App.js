@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import jwtDecode from 'jwt-decode';
 import { themeSettings } from "theme";
 import Layout from 'scenes/layout';
+import HomepageView from 'scenes/homepage';
 import Dashboard from 'scenes/dashboard';
 import Expenses from 'scenes/expenses';
 import Login from 'scenes/login';
@@ -69,7 +70,8 @@ function App() {
               <Route path='/' element={<Login />} />
             ) : (
               <Route element={<Layout />}>
-                <Route path = '/' element={<Dashboard />} />
+                <Route path = '/' element={<HomepageView />} />
+                <Route path = '/dashboard' element={<Dashboard />} />
                 <Route path = '/expenses' element={<Expenses />} />
                 <Route path = '/calendar' element={<CalendarView />} />
                 <Route path = '/yearly' element={<YearlyView/>} />

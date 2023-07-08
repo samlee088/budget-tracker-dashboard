@@ -108,9 +108,11 @@ const Sidebar = ({
                     <Box m='1.5rem 2rem 2rem 3rem'>
                         <FlexBetween color={theme.palette.secondary.main}>
                             <Box display='flex' alignItems='center' gap='0.5rem'>
-                                <Typography variant='h4' fontWeight='bold'>
-                                    Budget Tracker
-                                </Typography>
+                                <div onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+                                    <Typography variant='h4' fontWeight='bold'>
+                                        Budget Tracker
+                                    </Typography>
+                                </div>
                                 {!isNonMobile && (
                                     <IconButton onClick={()=> setIsSidebarOpen(!isSidebarOpen)}>
                                         <ChevronLeft />

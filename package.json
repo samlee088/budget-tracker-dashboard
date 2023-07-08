@@ -6,6 +6,7 @@
     "mongoose": "^7.2.3",
     "react-big-calendar": "^1.8.1",
     "react-query": "^3.39.3",
+    "react-router-dom": "^6.14.1",
     "reactjs-popup": "^2.0.5"
   }
 }
