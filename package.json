@@ -12,7 +12,6 @@
     "start-client": "cd client && npm start",
     "start-server": "cd server && npm start",
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
-    "postinstall": "cd client && npm run build"
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.0",
