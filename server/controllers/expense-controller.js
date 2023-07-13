@@ -24,7 +24,7 @@ export const addExpense = async (req, res) => {
 
       console.log(req.body);
       const currentDate = moment();
-      const futureDate = currentDate.add(6, 'months');
+      const futureDate = currentDate.add(12, 'months');
 
       let endDate = moment(req.body.expectedPaymentDate);
 
