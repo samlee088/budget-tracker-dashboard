@@ -37,14 +37,14 @@ const CalendarView = () => {
         expenseId: expense._id,
         expectedPayment: expense.expectedPaymentAmount,
         type: expense.actualPaymentAmount? 'expensePaid' :  (new Date(expense.expectedPaymentDate) < new Date(today)) ? 'late' : 'expense',
-        paymentDate: expense.actualPaymentAmount? moment(expense.actualPaymentDate).add(1, 'day').toDate() : '',
+        paymentDate: expense.actualPaymentAmount? moment(expense.actualPaymentDate).toDate() : '',
         paymentAmount : expense.actualPaymentAmount? expense.actualPaymentAmount: '',
       };
   
       const paymentEvent = {
         originalDueDate : new Date(expense.expectedPaymentDate),
-        start: moment(expense.actualPaymentDate).add(1, 'day').toDate(),
-        end: moment(expense.actualPaymentDate).add(1, 'day').toDate(),
+        start: moment(expense.actualPaymentDate).toDate(),
+        end: moment(expense.actualPaymentDate).toDate(),
         title: `${expense.name} Payment`,
         amount: expense.actualPaymentAmount,
         type: 'payment',
@@ -54,7 +54,7 @@ const CalendarView = () => {
       if (expense.actualPaymentDate) {
         return [paymentEvent, expenseEvent];
       }
-  
+      console.log(expenseEvent)
       return [expenseEvent];
     });
   }, [data]);

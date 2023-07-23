@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from "@mui/material";
 import { useAddPaymentMutation } from "state/api";
+import moment from 'moment';
 
 const PopupExpense = ({ showPopup, setShowPopup, selectedEvent, paymentDate, setPaymentDate, paymentAmount, setPaymentAmount, expenseTrigger, setExpenseTrigger }) => {
 
@@ -17,11 +18,12 @@ const PopupExpense = ({ showPopup, setShowPopup, selectedEvent, paymentDate, set
             console.log(selectedEvent.expenseId);
             console.log(paymentAmount);
             console.log(paymentDate);
+            const localDateTime = moment(paymentDate).format(); 
 
             const addPaymentResponse = await addPaymentPost({
                 _id: selectedEvent.expenseId,
                 actualPaymentAmount: paymentAmount,
-                actualPaymentDate: paymentDate
+                actualPaymentDate: localDateTime
             })
 
             console.log(addPaymentResponse);

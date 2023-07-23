@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { useAddExpenseMutation } from 'state/api';
 import Auth from '../utils/auth';
 import { useState } from 'react';
+import moment from 'moment';
 
 const ExpenseInput = () => {
 
@@ -24,11 +25,14 @@ const ExpenseInput = () => {
             console.log(dayRef.current.value)
             console.log(expectedPaymentRef.current.value)
 
+             // Convert the date string to local time zone before saving it
+            const localDateTime = moment(dayRef.current.value).format(); 
+
             
             const response = await addExpensePost({
               name: nameRef.current.value,
               frequency: occurrenceRef.current.value,
-              expectedPaymentDate: dayRef.current.value,
+              expectedPaymentDate: localDateTime,
               expectedPaymentAmount: expectedPaymentRef.current.value,  
               user: Auth.getProfile(),
             })
