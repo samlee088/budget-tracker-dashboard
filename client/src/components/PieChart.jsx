@@ -43,10 +43,11 @@ const PieChart = () => {
         data.forEach( (expense) => {
 
             if(expense.actualPaymentDate) {
+                console.log(expense)
                 if(new Date(expense.actualPaymentDate) < new Date(expense.expectedPaymentDate)) {
-                    latePayment.value = latePayment.value +1
-                } else {
                     onTimePayments.value = onTimePayments.value +1
+                } else {
+                    latePayment.value = latePayment.value +1
                 }
             } else {
                 if(new Date(expense.expectedPaymentDate) < today) {
