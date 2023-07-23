@@ -16,13 +16,13 @@ const ExpenseDataGrid = () => {
             // Check if expectedPaymentDate exists
             if (expense.expectedPaymentDate) {
                 // Convert UTC dates to non-UTC using Moment.js
-                convertedExpense.expectedPaymentDate = moment.utc(expense.expectedPaymentDate).add(1, 'day').local().format('YYYY-MM-DD');
+                convertedExpense.expectedPaymentDate = moment.utc(expense.expectedPaymentDate).local().format('YYYY-MM-DD');
             }
         
             // Check if actualPaymentDate exists
             if (expense.actualPaymentDate) {
                 // Convert UTC dates to non-UTC using Moment.js
-                convertedExpense.actualPaymentDate = moment.utc(expense.actualPaymentDate).add(1, 'day').local().format('YYYY-MM-DD');
+                convertedExpense.actualPaymentDate = moment.utc(expense.actualPaymentDate).local().format('YYYY-MM-DD');
             } else {
                 // If actualPaymentDate is not defined, assign an empty string
                 convertedExpense.actualPaymentDate = '';
